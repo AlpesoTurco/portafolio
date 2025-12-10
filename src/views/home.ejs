@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full bg-slate-950">
+<head>
+  <meta charset="UTF-8" />
+  <title><%= perfil ? perfil.nombre + ' - Portafolio' : 'Mi Portafolio' %></title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Config básica opcional de Tailwind (colores personalizados) -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#0ea5e9',   // sky-500
+            primaryDark: '#0369a1',
+            accent: '#22c55e'
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="min-h-full bg-slate-950 text-slate-100 antialiased">
+
+  <!-- NAVBAR -->
+  <nav class="border-b border-slate-800 bg-slate-900/70 backdrop-blur sticky top-0 z-20">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <div class="h-9 w-9 rounded-full bg-primary/20 flex items-center justify-center">
+          <span class="text-primary font-bold text-lg">
+            <%= perfil ? (perfil.nombre[0] || 'P') : 'P' %>
+          </span>
+        </div>
+        <div>
+          <p class="font-semibold text-sm sm:text-base">
+            <%= perfil ? perfil.nombre : 'Mi Portafolio' %>
+          </p>
+          <p class="text-xs text-slate-400">
+            <%= perfil ? perfil.titulo_profesional : 'Desarrollador de Software' %>
+          </p>
+        </div>
+      </div>
+
+      <% if (perfil) { %>
+      <div class="hidden sm:flex items-center gap-3 text-xs sm:text-sm">
+        <% if (perfil.github) { %>
+          <a href="<%= perfil.github %>" target="_blank"
+             class="px-3 py-1 rounded-full border border-slate-700 hover:border-primary hover:text-primary transition">
+            GitHub
+          </a>
+        <% } %>
+        <% if (perfil.linkedin) { %>
+          <a href="<%= perfil.linkedin %>" target="_blank"
+             class="px-3 py-1 rounded-full bg-primary hover:bg-primaryDark text-slate-950 font-medium transition">
+            LinkedIn
+          </a>
+        <% } %>
+      </div>
+      <% } %>
+    </div>
+  </nav>
+
+  <main class="max-w-6xl mx-auto px-4 py-10 space-y-12">
+
+    <!-- HERO / PERFIL -->
+    <section class="grid md:grid-cols-[2fr,1fr] gap-8 items-center">
+      <div>
+        <% if (perfil) { %>
+          <p class="text-sm uppercase tracking-[0.2em] text-primary mb-2">Portafolio profesional</p>
+          <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
+            <span class="block"><%= perfil.nombre %></span>
+            <span class="block text-primary text-2xl sm:text-3xl mt-1">
+              <%= perfil.titulo_profesional %>
+            </span>
+          </h1>
+          <p class="text-sm sm:text-base text-slate-300 leading-relaxed mb-5">
+            <%= perfil.descripcion %>
+          </p>
+
+          <div class="flex flex-wrap gap-3 mb-4">
+            <% if (perfil.github) { %>
+              <a href="<%= perfil.github %>" target="_blank"
+                 class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-800 hover:bg-slate-700 text-sm transition">
+                <span>Ver repositorios</span>
+              </a>
+            <% } %>
+
+            <% if (perfil.linkedin) { %>
+              <a href="<%= perfil.linkedin %>" target="_blank"
+                 class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary hover:bg-primaryDark text-slate-950 text-sm font-semibold transition">
+                <span>Conectemos en LinkedIn</span>
+              </a>
+            <% } %>
+
+            <% if (perfil.email) { %>
+              <a href="mailto:<%= perfil.email %>"
+                 class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-slate-700 hover:border-primary text-sm transition">
+                <span>Contactar por correo</span>
+              </a>
+            <% } %>
+          </div>
+
+          <div class="text-xs sm:text-sm text-slate-400">
+            <% if (perfil.email) { %>
+              <p>📧 <span class="font-medium text-slate-200"><%= perfil.email %></span></p>
+            <% } %>
+            <% if (perfil.telefono) { %>
+              <p>📱 <span class="font-medium text-slate-200"><%= perfil.telefono %></span></p>
+            <% } %>
+          </div>
+        <% } else { %>
+          <h1 class="text-3xl sm:text-4xl font-bold mb-4">Mi Portafolio</h1>
+          <p class="text-slate-300">Aún no has configurado tu perfil en la base de datos.</p>
+        <% } %>
+      </div>
+
+      <!-- Avatar / tarjeta lateral -->
+      <div class="md:justify-self-end">
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/60 p-5 shadow-lg flex flex-col items-center gap-3">
+          <div class="h-24 w-24 rounded-full bg-gradient-to-tr from-primary to-accent flex items-center justify-center text-3xl font-bold text-slate-950">
+            <%= perfil ? (perfil.nombre[0] || 'P') : 'P' %>
+          </div>
+          <div class="text-center">
+            <p class="font-semibold text-sm">
+              <%= perfil ? perfil.nombre : 'Desarrollador' %>
+            </p>
+            <p class="text-xs text-slate-400 mt-1">
+              <%= perfil ? perfil.titulo_profesional : 'Software Developer' %>
+            </p>
+          </div>
+          <div class="w-full border-t border-slate-800 pt-3 mt-2 text-xs text-slate-400">
+            <p>
+              Portafolio creado con <span class="text-primary font-medium">Node.js</span>,
+              <span class="text-primary font-medium">Express</span> y
+              <span class="text-primary font-medium">MySQL</span>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROYECTOS -->
+    <section id="proyectos" class="space-y-4">
+      <div class="flex items-center justify-between">
+        <h2 class="text-xl sm:text-2xl font-semibold">Proyectos destacados</h2>
+        <% if (proyectos && proyectos.length > 0) { %>
+          <p class="text-xs text-slate-400">
+            Mostrando <span class="font-semibold text-slate-200"><%= proyectos.length %></span> proyectos
+          </p>
+        <% } %>
+      </div>
+
+      <% if (proyectos && proyectos.length > 0) { %>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <% proyectos.forEach(p => { %>
+            <article class="group rounded-2xl border border-slate-800 bg-slate-900/60 p-4 flex flex-col justify-between hover:border-primary hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/20 transition">
+              <div>
+                <h3 class="font-semibold text-base sm:text-lg mb-1 group-hover:text-primary">
+                  <%= p.titulo %>
+                </h3>
+                <% if (p.fecha) { %>
+                  <p class="text-xs text-slate-400 mb-1">
+                    <%= new Date(p.fecha).toLocaleDateString('es-MX') %>
+                  </p>
+                <% } %>
+                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed mb-3">
+                  <%= p.descripcion %>
+                </p>
+
+                <% if (p.tecnologias) { %>
+                  <div class="flex flex-wrap gap-1.5 mb-3">
+                    <% p.tecnologias.split(',').forEach(t => { %>
+                      <span class="inline-flex items-center px-2 py-0.5 rounded-full bg-slate-800 text-[11px] text-slate-200 border border-slate-700">
+                        <%= t.trim() %>
+                      </span>
+                    <% }) %>
+                  </div>
+                <% } %>
+              </div>
+
+              <div class="flex flex-wrap gap-2 mt-2 text-xs">
+                <% if (p.github) { %>
+                  <a href="<%= p.github %>" target="_blank"
+                     class="inline-flex items-center px-3 py-1.5 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-100 transition">
+                    Código en GitHub
+                  </a>
+                <% } %>
+                <% if (p.demo) { %>
+                  <a href="<%= p.demo %>" target="_blank"
+                     class="inline-flex items-center px-3 py-1.5 rounded-full bg-primary hover:bg-primaryDark text-slate-950 font-medium transition">
+                    Ver demo
+                  </a>
+                <% } %>
+              </div>
+            </article>
+          <% }) %>
+        </div>
+      <% } else { %>
+        <p class="text-sm text-slate-400">
+          No hay proyectos registrados aún. Agrega algunos en tu base de datos para mostrarlos aquí.
+        </p>
+      <% } %>
+    </section>
+
+    <!-- HABILIDADES -->
+    <section id="habilidades" class="space-y-3">
+      <h2 class="text-xl sm:text-2xl font-semibold">Habilidades</h2>
+
+      <% if (habilidades && habilidades.length > 0) { %>
+        <div class="rounded-2xl border border-slate-800 bg-slate-900/60 p-4">
+          <div class="flex flex-wrap gap-1.5 mb-3 text-[11px] text-slate-400">
+            <span class="px-2 py-0.5 rounded-full bg-slate-800 border border-slate-700">
+              Lenguajes
+            </span>
+            <span class="px-2 py-0.5 rounded-full bg-slate-800 border border-slate-700">
+              Frameworks
+            </span>
+            <span class="px-2 py-0.5 rounded-full bg-slate-800 border border-slate-700">
+              Bases de datos
+            </span>
+            <span class="px-2 py-0.5 rounded-full bg-slate-800 border border-slate-700">
+              Redes / Herramientas
+            </span>
+          </div>
+
+          <div class="flex flex-wrap gap-2">
+            <% habilidades.forEach(h => { %>
+              <div class="px-3 py-1.5 rounded-full border border-slate-700 bg-slate-950/40 text-xs flex items-center gap-2">
+                <span class="font-medium text-slate-100"><%= h.nombre %></span>
+                <span class="text-[10px] px-1.5 py-0.5 rounded-full 
+                            <%= h.nivel === 'Avanzado' ? 'bg-emerald-500/20 text-emerald-300' 
+                              : h.nivel === 'Intermedio' ? 'bg-amber-500/20 text-amber-300'
+                              : 'bg-slate-500/20 text-slate-200' %>">
+                  <%= h.nivel %>
+                </span>
+                <span class="text-[10px] text-slate-400">
+                  <%= h.tipo %>
+                </span>
+              </div>
+            <% }) %>
+          </div>
+        </div>
+      <% } else { %>
+        <p class="text-sm text-slate-400">
+          Todavía no has registrado habilidades. Añádelas en tu tabla <code class="text-xs text-primary">habilidades</code>.
+        </p>
+      <% } %>
+    </section>
+
+    <!-- CONTACTO SIMPLE -->
+    <section id="contacto" class="border-t border-slate-800 pt-6 mt-4">
+      <h2 class="text-xl sm:text-2xl font-semibold mb-3">Contacto</h2>
+      <p class="text-sm text-slate-300 mb-3">
+        ¿Te interesa lo que hago? Estoy disponible para oportunidades como desarrollador.
+      </p>
+
+      <% if (perfil && perfil.email) { %>
+        <a href="mailto:<%= perfil.email %>"
+           class="inline-flex items-center px-4 py-2 rounded-full bg-primary hover:bg-primaryDark text-slate-950 font-semibold text-sm transition">
+          Enviar correo
+        </a>
+      <% } else { %>
+        <p class="text-sm text-slate-400">
+          Configura tu correo en la tabla <code class="text-xs text-primary">perfil</code> para habilitar el contacto directo.
+        </p>
+      <% } %>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-slate-900 bg-slate-950/90 mt-10">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-500">
+      <p>
+        © <%= new Date().getFullYear() %> 
+        <span class="text-slate-300 font-medium"><%= perfil ? perfil.nombre : 'Desarrollador' %></span>. 
+        Todos los derechos reservados.
+      </p>
+      <p class="text-[11px]">
+        Construido con Node.js · Express · MySQL · EJS · Tailwind CSS
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>
